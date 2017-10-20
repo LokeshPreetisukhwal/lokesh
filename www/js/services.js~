@@ -1,0 +1,25 @@
+angular.module('starter.services', [])
+
+.service('AuthService', function($q, $http, $rootScope, $ionicLoading, ApiEndpoint){
+	return {
+		login : function($email, $password) {
+			var data = JSON.stringify({
+					email: $email,
+					password: $password
+				});
+			
+			
+			$ionicLoading.show();
+
+	        $http.get("http://192.168.0.109:8080/login", data)
+	        	.then(function(response){
+			    	if(response.data.response=="success") {
+			    		$rootScope.response = response.data.response;
+			    	}
+			    	$ionicLoading.hide();
+	        	},function(){
+	        		$ionicLoading.hide();
+	        	});
+		}
+	}
+});
